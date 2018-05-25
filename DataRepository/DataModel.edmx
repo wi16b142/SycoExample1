@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="syco_trainingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sbCrewMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="LicenceNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sbCrewMemberTask">
+          <Key>
+            <PropertyRef Name="fkCrewMember" />
+            <PropertyRef Name="fkTask" />
+          </Key>
+          <Property Name="fkCrewMember" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="fkTask" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sbTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="fkType" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="sbType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__sbCrewMem__fkCre__41448AA6">
+          <End Role="sbCrewMember" Type="Self.sbCrewMember" Multiplicity="1" />
+          <End Role="sbCrewMemberTask" Type="Self.sbCrewMemberTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sbCrewMember">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sbCrewMemberTask">
+              <PropertyRef Name="fkCrewMember" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sbCrewMem__fkTas__4238AEDF">
+          <End Role="sbTask" Type="Self.sbTask" Multiplicity="1" />
+          <End Role="sbCrewMemberTask" Type="Self.sbCrewMemberTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sbTask">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sbCrewMemberTask">
+              <PropertyRef Name="fkTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__sbTask__fkType__37BB206C">
+          <End Role="sbType" Type="Self.sbType" Multiplicity="0..1" />
+          <End Role="sbTask" Type="Self.sbTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sbType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sbTask">
+              <PropertyRef Name="fkType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="syco_trainingModelStoreContainer">
+          <EntitySet Name="sbCrewMember" EntityType="Self.sbCrewMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sbCrewMemberTask" EntityType="Self.sbCrewMemberTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sbTask" EntityType="Self.sbTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sbType" EntityType="Self.sbType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__sbCrewMem__fkCre__41448AA6" Association="Self.FK__sbCrewMem__fkCre__41448AA6">
+            <End Role="sbCrewMember" EntitySet="sbCrewMember" />
+            <End Role="sbCrewMemberTask" EntitySet="sbCrewMemberTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sbCrewMem__fkTas__4238AEDF" Association="Self.FK__sbCrewMem__fkTas__4238AEDF">
+            <End Role="sbTask" EntitySet="sbTask" />
+            <End Role="sbCrewMemberTask" EntitySet="sbCrewMemberTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK__sbTask__fkType__37BB206C" Association="Self.FK__sbTask__fkType__37BB206C">
+            <End Role="sbType" EntitySet="sbType" />
+            <End Role="sbTask" EntitySet="sbTask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="syco_trainingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sbCrewMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LicenceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sbTask" Relationship="Self.sbCrewMemberTask" FromRole="sbCrewMember" ToRole="sbTask" />
+        </EntityType>
+        <EntityType Name="sbTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="fkType" Type="Guid" />
+          <NavigationProperty Name="sbType" Relationship="Self.FK__sbTask__fkType__37BB206C" FromRole="sbTask" ToRole="sbType" />
+          <NavigationProperty Name="sbCrewMember" Relationship="Self.sbCrewMemberTask" FromRole="sbTask" ToRole="sbCrewMember" />
+        </EntityType>
+        <EntityType Name="sbType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="sbTask" Relationship="Self.FK__sbTask__fkType__37BB206C" FromRole="sbType" ToRole="sbTask" />
+        </EntityType>
+        <Association Name="FK__sbTask__fkType__37BB206C">
+          <End Role="sbType" Type="Self.sbType" Multiplicity="0..1" />
+          <End Role="sbTask" Type="Self.sbTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sbType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="sbTask">
+              <PropertyRef Name="fkType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sbCrewMemberTask">
+          <End Role="sbCrewMember" Type="Self.sbCrewMember" Multiplicity="*" />
+          <End Role="sbTask" Type="Self.sbTask" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="syco_trainingEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sbCrewMember" EntityType="Self.sbCrewMember" />
+          <EntitySet Name="sbTask" EntityType="Self.sbTask" />
+          <EntitySet Name="sbType" EntityType="Self.sbType" />
+          <AssociationSet Name="FK__sbTask__fkType__37BB206C" Association="Self.FK__sbTask__fkType__37BB206C">
+            <End Role="sbType" EntitySet="sbType" />
+            <End Role="sbTask" EntitySet="sbTask" />
+          </AssociationSet>
+          <AssociationSet Name="sbCrewMemberTask" Association="Self.sbCrewMemberTask">
+            <End Role="sbCrewMember" EntitySet="sbCrewMember" />
+            <End Role="sbTask" EntitySet="sbTask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="syco_trainingModelStoreContainer" CdmEntityContainer="syco_trainingEntities1">
+          <EntitySetMapping Name="sbCrewMember">
+            <EntityTypeMapping TypeName="syco_trainingModel.sbCrewMember">
+              <MappingFragment StoreEntitySet="sbCrewMember">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="LicenceNumber" ColumnName="LicenceNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sbTask">
+            <EntityTypeMapping TypeName="syco_trainingModel.sbTask">
+              <MappingFragment StoreEntitySet="sbTask">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="fkType" ColumnName="fkType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sbType">
+            <EntityTypeMapping TypeName="syco_trainingModel.sbType">
+              <MappingFragment StoreEntitySet="sbType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="sbCrewMemberTask" TypeName="syco_trainingModel.sbCrewMemberTask" StoreEntitySet="sbCrewMemberTask">
+            <EndProperty Name="sbCrewMember">
+              <ScalarProperty Name="Id" ColumnName="fkCrewMember" />
+            </EndProperty>
+            <EndProperty Name="sbTask">
+              <ScalarProperty Name="Id" ColumnName="fkTask" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
