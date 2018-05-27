@@ -9,15 +9,37 @@
         Width="525"
         Title="App by Sascha Böck"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="61*"/>
+            <RowDefinition Height="260*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+
+        <TabPanel Margin="10,10,10.2,9.8">
+            <Label Content="Task: " VerticalAlignment="Center"/>
+            <ComboBox VerticalAlignment="Center" Width="180" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask, UpdateSourceTrigger=PropertyChanged}"/>
+        </TabPanel>
+
+        <TabPanel Grid.Column="1" Margin="9.8,10,10.4,9.8">
+            <Label Content="Type: " VerticalAlignment="Center"/>
+            <ComboBox VerticalAlignment="Center" Width="180"  ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType, UpdateSourceTrigger=PropertyChanged}"/>
+        </TabPanel>
+
+
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Margin="20,10.2,20.4,19.8" AutoGenerateColumns="False" ItemsSource="{Binding Crew}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding LicenceNumber}" ClipboardContentBinding="{x:Null}" Header="Licence No"/>
+                <DataGridTextColumn Binding="{Binding TaskDesc}" ClipboardContentBinding="{x:Null}" Header="Task Desc"/>
+                <DataGridTextColumn Binding="{Binding TypeDesc}" ClipboardContentBinding="{x:Null}" Header="Type Desc"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
     </Grid>
 </Window>

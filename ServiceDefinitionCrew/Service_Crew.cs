@@ -4,28 +4,28 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using DataRepository;
+using Shared;
 
 namespace ServiceDefinitionCrew
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public class Service_Crew : IService_Crew
     {
-        public string GetData(int value)
+        DataHandler dh = new DataHandler();
+        public List<MyTask> QueryAllTasks()
         {
-            return string.Format("You entered: {0}", value);
+            return dh.QueryAllTasks();
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public List<MyType> QueryAllTypes(string task)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            return dh.QueryAllTypes(task);
+        }
+
+        public List<MyCrewMember> QueryCrewMembers(string task, string type)
+        {
+            return dh.QueryCrewMembers(task, type);
         }
     }
 }

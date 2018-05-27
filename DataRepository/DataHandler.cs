@@ -1,13 +1,97 @@
-﻿using System;
+﻿using Shared;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataRepository
 {
     public class DataHandler
     {
+        syco_trainingEntities1 db = new syco_trainingEntities1();
+
+        public List<MyTask> QueryAllTasks()
+        {
+            return db.sbTask.Select(x => new MyTask()
+            {
+                Description = x.Description,
+                Duration = (int)x.Duration,
+                Priority = (int)x.Priority
+            }).ToList();
+        }
+        public List<MyType> QueryAllTypes(string task)
+        {
+
+            if(task != null)
+            {
+                var query = from x in db.sbType
+                            from y in db.sbTask
+                            where y.Description.Equals(task)
+                            select new MyType()
+                            {
+                                Description = x.Description
+                            };
+                return query.ToList();
+            }
+
+            return db.sbType.Select(x => new MyType()
+            {
+                Description = x.Description
+            }).ToList();
+        }
+        public List<MyCrewMember> QueryCrewMembers(string task, string type)
+        {
+            if(task == null && type == null)
+            {
+                var query1 = from x in db.sbCrewMember
+                            from y in x.sbTask
+                            select new MyCrewMember()
+                            {
+                                Name = x.Name,
+                                LicenceNumber = x.LicenceNumber,
+                                TaskDesc = y.Description,
+                                TypeDesc = y.sbType.Description
+                            };
+                return query1.ToList();
+            }else if(task == null)
+            {
+                var query2 = from x in db.sbCrewMember
+                            from y in x.sbTask
+                            where y.sbType.Description.Equals(type)
+                            select new MyCrewMember()
+                            {
+                                Name = x.Name,
+                                LicenceNumber = x.LicenceNumber,
+                                TaskDesc = y.Description,
+                                TypeDesc = y.sbType.Description
+                            };
+                return query2.ToList();
+            }
+            else if (type == null)
+            {
+                var query3 = from x in db.sbCrewMember
+                             from y in x.sbTask
+                             where y.Description.Equals(task)
+                             select new MyCrewMember()
+                             {
+                                 Name = x.Name,
+                                 LicenceNumber = x.LicenceNumber,
+                                 TaskDesc = y.Description,
+                                 TypeDesc = y.sbType.Description
+                             };
+                return query3.ToList();
+            }
+
+            var query4 = from x in db.sbCrewMember
+                         from y in x.sbTask
+                         where y.Description.Equals(task) && y.sbType.Description.Equals(type)
+                         select new MyCrewMember()
+                         {
+                             Name = x.Name,
+                             LicenceNumber = x.LicenceNumber,
+                             TaskDesc = y.Description,
+                             TypeDesc = y.sbType.Description
+                         };
+            return query4.ToList();
+        }
     }
 
     #region cheatsheet

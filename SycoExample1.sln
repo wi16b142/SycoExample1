@@ -20,6 +20,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataRepository", "DataRepository\DataRepository.csproj", "{FB9FB3F7-DE58-4F05-A980-01AA0B178119}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrewMemberView", "CrewMemberView\CrewMemberView.csproj", "{04C2F508-0BC8-4C7A-838B-DC09C5E55767}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5AB3F16-AAC9-4090-BDE3-44B9697A9303} = {D5AB3F16-AAC9-4090-BDE3-44B9697A9303}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

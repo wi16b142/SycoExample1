@@ -8,14 +8,24 @@ using System.Threading.Tasks;
 namespace Shared
 {
     [DataContract]
-    public class sbType
+    public class MyType
     {
-        public sbType(string description)
+        public MyType()
+        {
+            Description = "";
+        }
+
+        public MyType(string description)
         {
             Description = description;
         }
 
         [DataMember]
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }

@@ -26,5 +26,7 @@ namespace DataRepository
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<sbTask> sbTask { get; set; }
+        public string TaskDesc { get; internal set; }
+        public string TypeDesc { get; internal set; }
     }
 }

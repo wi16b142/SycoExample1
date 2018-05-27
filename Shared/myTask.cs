@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 namespace Shared
 {
     [DataContract]
-    public class sbTask
+    public class MyTask
     {
-        public sbTask(string description, int duration, int priority)
+        public MyTask()
+        {
+            Description = "";
+        }
+
+        public MyTask(string description, int duration, int priority)
         {
             Description = description;
             Duration = duration;
@@ -23,5 +28,10 @@ namespace Shared
         public int Duration { get; set; }
         [DataMember]
         public int Priority { get; set; }
+
+        public override string ToString()
+        {
+            return Description;
+        }
     }
 }
